@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yanis Benali | NovaLab - Sourcing Chine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505; --text-main: #FFFFFF; --text-muted: #A0A0A0;
+            --glow-purple: rgba(107, 33, 168, 0.35); --glow-blue: rgba(56, 189, 248, 0.2);
+            --card-bg: rgba(25, 25, 25, 0.6); --border-color: rgba(255, 255, 255, 0.08);
+            --font-sans: 'Inter', sans-serif; --font-serif: 'Playfair Display', serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-sans); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        
+        .glow-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1; overflow: hidden; }
+        .glow-1, .glow-2 { position: absolute; border-radius: 50%; filter: blur(120px); }
+        .glow-1 { top: -10%; left: 20%; width: 500px; height: 500px; background: var(--glow-purple); }
+        .glow-2 { bottom: 10%; right: -10%; width: 600px; height: 600px; background: var(--glow-blue); }
+        
+        h1, h2, h3 { font-weight: 400; line-height: 1.2; }
+        .serif-italic { font-family: var(--font-serif); font-style: italic; color: #E2E8F0; }
+        .sur-titre { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #a855f7; margin-bottom: 15px; display: inline-block; font-weight: 600;}
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        section { padding: 60px 0; }
+        
+        /* Header & Navigation */
+        header { padding: 32px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: relative; z-index: 100;}
+        .logo { font-family: var(--font-sans); font-weight: 600; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; color: #fff; cursor: pointer;}
+        
+        /* Hamburger Menu */
+        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 6px; z-index: 1000; position: relative; }
+        .hamburger span { display: block; width: 30px; height: 2px; background-color: #fff; transition: all 0.3s ease; }
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        .mobile-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(5,5,5,0.95); backdrop-filter: blur(15px); z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px; opacity: 0; pointer-events: none; transition: all 0.4s ease; }
+        .mobile-menu.active { opacity: 1; pointer-events: all; }
+        .mobile-menu a { color: #fff; text-decoration: none; font-size: 1.8rem; font-family: var(--font-serif); font-weight: 600; transition: color 0.3s; }
+        .mobile-menu a:hover { color: #a855f7; }
+
+        /* App Routing Classes */
+        .app-view { display: none; animation: fadeIn 0.5s ease; }
+        .app-view.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Typography & Utilities */
+        .hero { text-align: center; padding-top: 60px; padding-bottom: 40px; }
+        .subtitle-top { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 15px; }
+        .subtitle-top::before, .subtitle-top::after { content: ""; height: 1px; width: 30px; background-color: var(--text-muted); }
+        .hero h1 { font-size: clamp(2.8rem, 5vw, 4.5rem); margin-bottom: 30px; display: flex; flex-direction: column; gap: 10px; }
+        .hero p { color: var(--text-muted); max-width: 700px; margin: 0 auto 50px auto; font-size: 1.1rem; }
+        
+        .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 16px 32px; border-radius: 50px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; cursor: pointer; display: inline-block; border: none; font-family: var(--font-sans); text-align: center; }
+        .btn-primary { background: linear-gradient(135deg, #a855f7, #38bdf8); color: #fff; box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3); }
+        .btn-primary:hover { box-shadow: 0 15px 40px rgba(168, 85, 247, 0.5); transform: translateY(-2px); }
+        .btn-secondary { background-color: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); }
+        .btn-secondary:hover { border-color: #fff; background-color: rgba(255, 255, 255, 0.05); }
+        
+        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title h2 { font-size: 2.5rem; }
+        
+        /* Grids */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
+        .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 40px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        
+        /* Cards */
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 40px; backdrop-filter: blur(10px); transition: transform 0.3s ease, border-color 0.3s ease; display: flex; flex-direction: column; cursor: pointer; }
+        .card:hover { transform: translateY(-5px); border-color: rgba(168, 85, 247, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card-tag { display: inline-block; padding: 6px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #e2e8f0; }
+        
+        .card h3 { font-size: 1.6rem; margin-bottom: 15px; font-family: var(--font-serif); color: #fff;}
+        .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 15px; flex-grow: 1; }
+        
+        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 20px; }
+        .price { font-size: 1.5rem; font-family: var(--font-serif); color: #fff; font-weight: 600; }
+        .buy-btn-small { background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); color: #fff; padding: 10px 20px; border-radius: 50px; font-family: var(--font-sans); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; transition: all 0.3s ease; }
+        .card:hover .buy-btn-small { background: rgba(168, 85, 247, 0.3); border-color: #a855f7; box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); }
+
+        .feature-card { padding: 30px; text-align: left; cursor: default; }
+        .feature-card:hover { transform: none; border-color: var(--border-color); box-shadow: none; }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 20px; display: inline-block; background: rgba(168, 85, 247, 0.1); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+        /* Guide Image Box */
+        .guide-image-box { background: var(--card-bg); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 20px; aspect-ratio: 4/3; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 40px rgba(168,85,247,0.15); }
+        .guide-image-box::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(145deg, rgba(168,85,247,0.2), transparent); pointer-events: none; }
+
+        /* Premium Offer */
+        .premium-offer { margin-top: 60px; border-radius: 20px; padding: 3px; position: relative; overflow: hidden; }
+        .premium-offer::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent 75%, rgba(168, 85, 247, 0.2) 85%, #a855f7 95%, #38bdf8 100%); animation: border-rotate 4s linear infinite; z-index: 0; }
+        .premium-offer-inner { background: linear-gradient(145deg, rgba(20,20,20,1) 0%, rgba(10,10,10,1) 100%); border-radius: 18px; z-index: 1; position: relative; padding: 60px; display: flex; flex-wrap: wrap; gap: 40px; align-items: center; }
+        .premium-offer-content { flex: 1; min-width: 300px; }
+        .premium-offer-action { flex: 0 0 320px; text-align: center; padding: 40px; background: rgba(0,0,0,0.5); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); }
+        .offer-list { list-style: none; margin: 30px 0 0 0; }
+        .offer-list li { margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px; color: #E2E8F0; font-size: 1.05rem; }
+        .offer-list li::before { content: ""; display: block; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #a855f7; background: rgba(168, 85, 247, 0.2); margin-top: 6px; flex-shrink: 0; }
+        .price-strike { text-decoration: line-through; color: var(--text-muted); font-size: 1.2rem; }
+        .price-huge { font-size: 4rem; font-family: var(--font-serif); color: #fff; line-height: 1; margin: 10px 0 25px 0; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        @keyframes border-rotate { 100% { transform: rotate(360deg); } }
+
+        /* Fiches Produits Spécifiques */
+        .breadcrumb { margin-top: 20px; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; display: inline-block;}
+        .breadcrumb:hover { color: #fff; text-decoration: underline; }
+        .product-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 20px; align-items: start; }
+        .product-image-box { background: var(--card-bg); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 20px; aspect-ratio: 4/5; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 40px rgba(56,189,248,0.15); }
+        .product-image-box::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(145deg, rgba(56,189,248,0.2), transparent); pointer-events: none; }
+        
+        /* Modificaton pour la boîte image du Pack Complet */
+        .product-image-box.pack-box { border-color: rgba(168, 85, 247, 0.6); box-shadow: 0 15px 50px rgba(168,85,247,0.3); }
+        .product-image-box.pack-box::after { background: linear-gradient(145deg, rgba(168,85,247,0.3), transparent); }
+
+        .product-info h1 { font-size: 3rem; margin-bottom: 15px; font-family: var(--font-serif); }
+        .product-price { font-size: 2.5rem; font-weight: 600; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .product-desc { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 30px; }
+        .features-list { list-style: none; margin-bottom: 40px; }
+        .features-list li { margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px; color: #E2E8F0; font-size: 1rem; }
+        .features-list li::before { content: "✓"; color: #a855f7; font-weight: bold; }
+        .bonus-box { background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 40px; display: flex; align-items: center; gap: 15px; }
+        .bonus-box span { font-size: 1.5rem; }
+        .bonus-box div strong { color: #fff; display: block; margin-bottom: 5px; }
+        .bonus-box div p { color: var(--text-muted); font-size: 0.85rem; margin: 0; }
+        .security-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px; color: var(--text-muted); font-size: 0.8rem; }
+        
+        .detailed-content { margin-top: 80px; padding-top: 80px; border-top: 1px solid var(--border-color); }
+        .detailed-content h2 { font-size: 2rem; margin-bottom: 30px; text-align: center; }
+        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 30px; }
+        .content-card h3 { font-size: 1.3rem; margin-bottom: 15px; color: #a855f7; }
+        .content-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .guide-grid, .product-layout { grid-template-columns: 1fr; gap: 40px; }
+            .premium-offer-inner { padding: 30px; }
+            .premium-offer-action { flex: 1 1 100%; padding: 30px 20px; }
+            .product-info h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-bg"><div class="glow-1"></div><div class="glow-2"></div></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#" onclick="navigate('home'); closeMenu()">Accueil</a>
+        <a href="#pourquoi" onclick="navigate('home'); closeMenu()">Pourquoi moi ?</a>
+        <a href="#guide-offert" onclick="navigate('home'); closeMenu()">Gifting (Guide)</a>
+        <a href="#shop" onclick="navigate('home'); closeMenu()">Boutique (Les Listes)</a>
+        <a href="#" onclick="navigate('pack'); closeMenu()" style="color: #a855f7;">Pack Ultime</a>
+    </div>
+
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <div class="logo" onclick="navigate('home')">YANIS BENALI</div>
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </header>
+
+        <!-- ============================================== -->
+        <!-- VIEW 0: HOME PAGE                              -->
+        <!-- ============================================== -->
+        <div id="view-home" class="app-view active">
+            <section class="hero">
+                <div class="subtitle-top">Sourcing Chine & Supply Chain</div>
+                <h1>
+                    <span>Ton sourcing en Chine.</span>
+                    <span class="serif-italic">Sans intermédiaire.</span>
+                </h1>
+                <p>La Chine fabrique 60% des produits mondiaux. Accède directement aux usines pour obtenir des prix 3 à 8 fois moins chers. Personnalise tes produits avec des MOQ ultra-bas (parfois dès 1 à 50 pièces). Le réseau privé sécurisé pour lancer et scaler ta marque e-commerce.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="navigate('pack')">Obtenir le Pack Ultime</button>
+                    <a href="#shop" class="btn btn-secondary">Voir les listes individuelles</a>
+                </div>
+            </section>
+
+            <section id="pourquoi" style="padding-top: 20px;">
+                <div class="section-title">
+                    <span class="sur-titre">Ce qui me différencie</span>
+                    <h2>Pourquoi <span class="serif-italic">mes fournisseurs</span> ?</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="card feature-card">
+                        <div class="feature-icon">📍</div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 10px; color: #fff;">Vérifiés sur place</h3>
+                        <p style="font-size: 0.95rem; margin-bottom: 0;">Contacts sourcés, testés et validés directement sur le terrain, dans les usines en Chine.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <div class="feature-icon">🏭</div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 10px; color: #fff;">Prix directs usine</h3>
+                        <p style="font-size: 0.95rem; margin-bottom: 0;">Aucun agent, aucun intermédiaire. Tu traites directement avec le fabricant pour maximiser tes marges.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 10px; color: #fff;">Accès instantané</h3>
+                        <p style="font-size: 0.95rem; margin-bottom: 0;">Ton répertoire de fournisseurs PDF t'est envoyé automatiquement par email juste après ton paiement.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 10px; color: #fff;">Conseils en DM</h3>
+                        <p style="font-size: 0.95rem; margin-bottom: 0;">Un doute ? Une question sur un fournisseur ? Je te conseille directement en DM sur Instagram.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="guide-offert" style="padding-top: 40px;">
+                <div class="guide-grid">
+                    <div>
+                        <span class="sur-titre">Gifting : Pour chaque achat</span>
+                        <h2 style="font-size: 2.8rem; margin-bottom: 20px;">Le Guide Pratique <br><span class="serif-italic">de Négociation</span></h2>
+                        <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px;">Avoir le bon fournisseur n'est que la première étape. Savoir lui parler en est une autre. <strong>Pour l'achat de n'importe quelle liste ou du pack</strong>, je t'offre mon guide complet pour négocier comme un pro avec les usines.</p>
+                        <ul class="offer-list">
+                            <li>La technique redoutable de l'ancrage à -30%.</li>
+                            <li>Les 7 leviers pour faire baisser les prix et MOQ.</li>
+                            <li>Scripts de contact WeChat à copier-coller (en anglais).</li>
+                            <li>Les pièges à éviter et l'utilisation de Trade Assurance.</li>
+                        </ul>
+                    </div>
+                    <div class="guide-image-box">
+                        <!-- MOCKUP 3D - GUIDE DE NÉGOCIATION -->
+                        <div style="position: relative; width: 220px; height: 320px; background: linear-gradient(145deg, #1a1a1a, #050505); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 6px 16px 16px 6px; box-shadow: inset 8px 0 15px rgba(255,255,255,0.05), 15px 25px 40px rgba(0,0,0,0.6), 0 0 30px rgba(168, 85, 247, 0.2); display: flex; flex-direction: column; padding: 25px 20px; text-align: left; transform: perspective(1000px) rotateY(-15deg); transition: transform 0.4s ease; z-index: 2; cursor: default;">
+                            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: linear-gradient(to right, rgba(255,255,255,0.15), transparent); border-radius: 6px 0 0 6px; border-right: 1px solid rgba(0,0,0,0.3);"></div>
+                            <div style="font-family: var(--font-sans); font-size: 0.7rem; color: #E2E8F0; font-weight: 700; letter-spacing: 2px; margin-bottom: auto; text-transform: uppercase; padding-left: 12px;">NovaLab.</div>
+                            <div style="padding-left: 12px;">
+                                <p style="color: #a855f7; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">Le Guide Pratique</p>
+                                <h3 style="color: #fff; font-family: var(--font-serif); font-size: 1.9rem; line-height: 1.1; margin-bottom: 20px;">Négociation<br>& <span style="font-style: italic; color: #E2E8F0;">Sourcing</span></h3>
+                            </div>
+                            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; padding-left: 12px;">
+                                <p style="color: var(--text-muted); font-family: var(--font-sans); font-size: 0.75rem; line-height: 1.7; margin: 0; font-weight: 500;">
+                                    <span style="color: #a855f7;">✓</span> Scripts WeChat<br>
+                                    <span style="color: #a855f7;">✓</span> Ancrage à -30%<br>
+                                    <span style="color: #a855f7;">✓</span> 7 Leviers de prix
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="shop">
+                <div class="section-title">
+                    <span class="sur-titre">Base de données NovaLab</span>
+                    <h2>Les Contacts <span class="serif-italic">Directs Usines</span></h2>
+                </div>
+                
+                <div class="cards-grid">
+                    <!-- Niche 1 -->
+                    <div class="card" onclick="navigate('mode')">
+                        <div class="card-top"><span class="card-tag">Mode & Vêtements</span></div>
+                        <h3>👕 Prêt-à-porter & <span class="serif-italic">Sportswear</span></h3>
+                        <p>Contacts directs pour le prêt-à-porter (Zara/H&M), le sportswear (Alo), la mode mastour et les tenues traditionnelles.</p>
+                        <div style="color: #c084fc; font-size: 0.85rem; font-weight: 600; margin-top: auto; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                            <span>🎁</span> + Guide de Négociation OFFERT
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">27€</span>
+                            <div class="buy-btn-small">Voir le détail</div>
+                        </div>
+                    </div>
+
+                    <!-- Niche 2 -->
+                    <div class="card" onclick="navigate('tech')">
+                        <div class="card-top"><span class="card-tag">Tech & Électronique</span></div>
+                        <h3>📱 Accessoires & <span class="serif-italic">Électronique</span></h3>
+                        <p>Accès exclusif pour les casques audio, manettes de jeux, batteries externes, et coques de téléphone avec MOQ flexibles.</p>
+                        <div style="color: #c084fc; font-size: 0.85rem; font-weight: 600; margin-top: auto; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                            <span>🎁</span> + Guide de Négociation OFFERT
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">27€</span>
+                            <div class="buy-btn-small">Voir le détail</div>
+                        </div>
+                    </div>
+
+                    <!-- Niche 3 -->
+                    <div class="card" onclick="navigate('beaute')">
+                        <div class="card-top"><span class="card-tag">Cosmétique & Beauté</span></div>
+                        <h3>💄 Skincare & <span class="serif-italic">Maquillage</span></h3>
+                        <p>Laboratoires pour produits skincare, maquillage (dès 500 pcs) et extensions de cils (dès 10 pcs). Marque blanche de haute qualité.</p>
+                        <div style="color: #c084fc; font-size: 0.85rem; font-weight: 600; margin-top: auto; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                            <span>🎁</span> + Guide de Négociation OFFERT
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">27€</span>
+                            <div class="buy-btn-small">Voir le détail</div>
+                        </div>
+                    </div>
+
+                    <!-- Niche 4 -->
+                    <div class="card" onclick="navigate('maison')">
+                        <div class="card-top"><span class="card-tag">Maison & Mobilier</span></div>
+                        <h3>🛋️ Mobilier & <span class="serif-italic">Décoration</span></h3>
+                        <p>Usines pour mobilier d'intérieur/extérieur, tables de salon, miroirs LED et fauteuils massants professionnels.</p>
+                        <div style="color: #c084fc; font-size: 0.85rem; font-weight: 600; margin-top: auto; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                            <span>🎁</span> + Guide de Négociation OFFERT
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">27€</span>
+                            <div class="buy-btn-small">Voir le détail</div>
+                        </div>
+                    </div>
+
+                    <!-- Niche 5 -->
+                    <div class="card" onclick="navigate('bijoux')">
+                        <div class="card-top"><span class="card-tag">Bijouterie & Accessoires</span></div>
+                        <h3>💍 Joaillerie & <span class="serif-italic">Packaging</span></h3>
+                        <p>Bijoux plaqué or avec MOQ dès 1 pièce pour lancer ta marque. Fournisseurs de boîtes sur-mesure et photographes pro (dès 2€/photo).</p>
+                        <div style="color: #c084fc; font-size: 0.85rem; font-weight: 600; margin-top: auto; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                            <span>🎁</span> + Guide de Négociation OFFERT
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">27€</span>
+                            <div class="buy-btn-small">Voir le détail</div>
+                        </div>
+                    </div>
+
+                    <!-- Niche 6 -->
+                    <div class="card" onclick="navigate('sacs')">
+                        <div class="card-top"><span class="card-tag">Sacs & Maroquinerie</span></div>
+                        <h3>👜 Maroquinerie & <span class="serif-italic">Sacs</span></h3>
+                        <p>Fournisseurs spécialisés dans les sacs à main tendance, sacs de voyage et pochettes (MOQ de 50 pièces pour apposer ton logo).</p>
+                        <div style="color: #c084fc; font-size: 0.85rem; font-weight: 600; margin-top: auto; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                            <span>🎁</span> + Guide de Négociation OFFERT
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">27€</span>
+                            <div class="buy-btn-small">Voir le détail</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pack Complet -->
+                <div id="pack" class="premium-offer" style="cursor: pointer;" onclick="navigate('pack')">
+                    <div class="premium-offer-inner">
+                        <div class="premium-offer-content">
+                            <span class="card-tag" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.4); color: #c084fc;">OFFRE ÉCOSYSTÈME NOVALAB</span>
+                            <h3 style="margin-top: 20px; font-size: 2.8rem; color: #fff;">📦 Le Pack <span class="serif-italic">Maître Sourcing</span></h3>
+                            <p style="color: var(--text-muted); margin-top: 15px; font-size: 1.1rem; max-width: 500px;">Pourquoi te limiter à une seule niche ? Obtiens l'intégralité de mon carnet d'adresses en Chine, mes stratégies de négo et mes transporteurs pour bâtir un empire e-commerce solide.</p>
+                            <ul class="offer-list">
+                                <li><strong>L'intégralité des 6 listes de fournisseurs</strong> (Valeur 162€)</li>
+                                <li><strong>INCLUS : Le Guide de Négociation & Sourcing.</strong> (Offert)</li>
+                                <li><strong>Bonus Exclusif : Fiche Transporteur Privé.</strong> Livraison dans +50 pays.</li>
+                            </ul>
+                        </div>
+                        <div class="premium-offer-action">
+                            <div class="price-strike">219€</div>
+                            <div class="price-huge">67€</div>
+                            <div class="btn btn-primary" style="width: 100%; margin-bottom: 20px; padding: 20px 0; font-size: 1.1rem;">Voir le Pack Complet</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- VIEW 1: MODE                                   -->
+        <!-- ============================================== -->
+        <div id="view-mode" class="app-view">
+            <div class="breadcrumb" onclick="navigate('home')">&larr; Retour à la boutique</div>
+            <section class="product-layout">
+                <div class="product-image-box">
+                    <!-- MOCKUP 3D - LISTE -->
+                    <div style="position: relative; width: 220px; height: 320px; background: linear-gradient(145deg, #1a1a1a, #050505); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 6px 16px 16px 6px; box-shadow: inset 8px 0 15px rgba(255,255,255,0.05), 15px 25px 40px rgba(0,0,0,0.6), 0 0 30px rgba(56, 189, 248, 0.2); display: flex; flex-direction: column; padding: 25px 20px; text-align: left; transform: perspective(1000px) rotateY(-15deg); transition: transform 0.4s ease; z-index: 2; cursor: default;">
+                        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: linear-gradient(to right, rgba(255,255,255,0.15), transparent); border-radius: 6px 0 0 6px; border-right: 1px solid rgba(0,0,0,0.3);"></div>
+                        <div style="font-family: var(--font-sans); font-size: 0.7rem; color: #E2E8F0; font-weight: 700; letter-spacing: 2px; margin-bottom: auto; text-transform: uppercase; padding-left: 12px;">NovaLab.</div>
+                        <div style="padding-left: 12px;">
+                            <p style="color: #38bdf8; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">Sourcing List</p>
+                            <h3 style="color: #fff; font-family: var(--font-serif); font-size: 1.9rem; line-height: 1.1; margin-bottom: 20px;">Mode &<br><span style="font-style: italic; color: #E2E8F0;">Vêtements</span></h3>
+                        </div>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; padding-left: 12px;">
+                            <p style="color: var(--text-muted); font-family: var(--font-sans); font-size: 0.75rem; line-height: 1.7; margin: 0; font-weight: 500;">
+                                <span style="color: #38bdf8;">✓</span> 👕 Prêt-à-porter<br>
+                                <span style="color: #38bdf8;">✓</span> MOQ ultra-bas<br>
+                                <span style="color: #38bdf8;">✓</span> Contacts direct Usines
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="sur-titre">Sourcing Liste Exclusif</span>
+                    <h1>👕 Prêt-à-porter & <span class="serif-italic">Sportswear</span></h1>
+                    <div class="product-price">27€ <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400; text-decoration: line-through;">97€</span></div>
+                    <p class="product-desc">Le carnet d'adresses privé pour lancer ta marque de vêtements. Accède directement aux usines de confection en Chine sans passer par un agent. Idéal pour le streetwear, le sportswear et la mode mastour.</p>
+                    <ul class="features-list">
+                        <li>Usines textiles vérifiées avec des Minimums de Commande (MOQ) ultra-bas pour tester ton marché.</li>
+                        <li>Qualité Premium : Fournisseurs pour coton lourd (heavyweight), impression DTG/DTF et seamless.</li>
+                        <li>Customisation totale : Étiquettes personnalisées et packaging à l'image de ta marque.</li>
+                        <li>Contacts directs WhatsApp et WeChat des responsables d'usines.</li>
+                    </ul>
+                    <div class="bonus-box">
+                        <span>🎁</span>
+                        <div>
+                            <strong>INCLUS : Le Guide de Négociation & Sourcing</strong>
+                            <p>Pour cet achat, reçois gratuitement le guide complet : scripts WeChat de contact, technique d'ancrage à -30% et protection des paiements.</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary stripe-checkout" style="width: 100%;" data-product="mode">Payer & Recevoir le PDF (27€)</button>
+                    <div class="security-badges"><span>🔒 Paiement sécurisé via Stripe</span><span>⚡ Envoi immédiat par email</span></div>
+                </div>
+            </section>
+            <section class="detailed-content">
+                <h2>Ce que contient <span class="serif-italic">ce répertoire</span></h2>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h3>👔 Prêt-à-porter & Streetwear</h3>
+                        <p>Des usines capables de reproduire les coupes et la qualité des grandes enseignes (style Zara, H&M). Idéal pour créer des collections de basiques ou des pièces streetwear uniques avec un grammage lourd.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>🧘‍♀️ Sportswear & Seamless</h3>
+                        <p>Les meilleurs fabricants pour lancer ta marque de sport (type Alo Yoga). Leggings sans couture, brassières, et ensembles respirants adaptés à ton audience.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>🧕 Mode Mastour & Traditionnelle</h3>
+                        <p>Des fournisseurs spécialisés dans les tenues amples, robes, abayas et tenues traditionnelles (africaines, etc.) avec un choix infini de tissus et de couleurs.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- VIEW 2: TECH                                   -->
+        <!-- ============================================== -->
+        <div id="view-tech" class="app-view">
+            <div class="breadcrumb" onclick="navigate('home')">&larr; Retour à la boutique</div>
+            <section class="product-layout">
+                <div class="product-image-box">
+                    <!-- MOCKUP 3D - LISTE -->
+                    <div style="position: relative; width: 220px; height: 320px; background: linear-gradient(145deg, #1a1a1a, #050505); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 6px 16px 16px 6px; box-shadow: inset 8px 0 15px rgba(255,255,255,0.05), 15px 25px 40px rgba(0,0,0,0.6), 0 0 30px rgba(56, 189, 248, 0.2); display: flex; flex-direction: column; padding: 25px 20px; text-align: left; transform: perspective(1000px) rotateY(-15deg); transition: transform 0.4s ease; z-index: 2; cursor: default;">
+                        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: linear-gradient(to right, rgba(255,255,255,0.15), transparent); border-radius: 6px 0 0 6px; border-right: 1px solid rgba(0,0,0,0.3);"></div>
+                        <div style="font-family: var(--font-sans); font-size: 0.7rem; color: #E2E8F0; font-weight: 700; letter-spacing: 2px; margin-bottom: auto; text-transform: uppercase; padding-left: 12px;">NovaLab.</div>
+                        <div style="padding-left: 12px;">
+                            <p style="color: #38bdf8; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">Sourcing List</p>
+                            <h3 style="color: #fff; font-family: var(--font-serif); font-size: 1.9rem; line-height: 1.1; margin-bottom: 20px;">Tech &<br><span style="font-style: italic; color: #E2E8F0;">Électro</span></h3>
+                        </div>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; padding-left: 12px;">
+                            <p style="color: var(--text-muted); font-family: var(--font-sans); font-size: 0.75rem; line-height: 1.7; margin: 0; font-weight: 500;">
+                                <span style="color: #38bdf8;">✓</span> 📱 Accessoires<br>
+                                <span style="color: #38bdf8;">✓</span> Huaqiangbei<br>
+                                <span style="color: #38bdf8;">✓</span> Contacts direct Usines
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="sur-titre">Sourcing Liste Exclusif</span>
+                    <h1>📱 Accessoires & <span class="serif-italic">Électronique</span></h1>
+                    <div class="product-price">27€ <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400; text-decoration: line-through;">97€</span></div>
+                    <p class="product-desc">Plonge au cœur de Huaqiangbei à Shenzhen. Cette liste répertorie les fournisseurs d'accessoires tech et d'électronique grand public. Parfait pour une marque d'accessoires high-tech ou du dropshipping de qualité.</p>
+                    <ul class="features-list">
+                        <li>Accès aux usines de Shenzhen pour des produits dernier cri.</li>
+                        <li>Spécialités : Casques audio BONY, boîtiers AirPods, batteries externes, manettes.</li>
+                        <li>Coques de téléphone personnalisables (MOQ élevés et faibles selon le fournisseur).</li>
+                        <li>Produits avec normes garanties (CE, RoHS) pour la revente en Europe.</li>
+                    </ul>
+                    <div class="bonus-box">
+                        <span>🎁</span>
+                        <div>
+                            <strong>INCLUS : Le Guide de Négociation & Sourcing</strong>
+                            <p>Pour cet achat, reçois gratuitement le guide complet : scripts WeChat de contact, technique d'ancrage à -30% et protection des paiements.</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary stripe-checkout" style="width: 100%;" data-product="tech">Payer & Recevoir le PDF (27€)</button>
+                    <div class="security-badges"><span>🔒 Paiement sécurisé via Stripe</span><span>⚡ Envoi immédiat par email</span></div>
+                </div>
+            </section>
+            <section class="detailed-content">
+                <h2>Ce que contient <span class="serif-italic">ce répertoire</span></h2>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h3>🎧 Audio & Gaming</h3>
+                        <p>Des fournisseurs de pointe pour les enceintes Bluetooth, écouteurs, casques audio et manettes de jeux. De l'accessoire abordable à l'électronique haut de gamme.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>📱 Accessoires Smartphone</h3>
+                        <p>Le paradis des accessoires : coques personnalisées, chargeurs rapides, batteries externes et câbles USB directement depuis les usines.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>💻 Supports & Périphériques</h3>
+                        <p>Claviers, souris, trépieds, supports de tablettes pour enfants et adultes. Tout pour le bureau et la création de contenu.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- VIEW 3: BEAUTE                                 -->
+        <!-- ============================================== -->
+        <div id="view-beaute" class="app-view">
+            <div class="breadcrumb" onclick="navigate('home')">&larr; Retour à la boutique</div>
+            <section class="product-layout">
+                <div class="product-image-box">
+                    <!-- MOCKUP 3D - LISTE -->
+                    <div style="position: relative; width: 220px; height: 320px; background: linear-gradient(145deg, #1a1a1a, #050505); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 6px 16px 16px 6px; box-shadow: inset 8px 0 15px rgba(255,255,255,0.05), 15px 25px 40px rgba(0,0,0,0.6), 0 0 30px rgba(56, 189, 248, 0.2); display: flex; flex-direction: column; padding: 25px 20px; text-align: left; transform: perspective(1000px) rotateY(-15deg); transition: transform 0.4s ease; z-index: 2; cursor: default;">
+                        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: linear-gradient(to right, rgba(255,255,255,0.15), transparent); border-radius: 6px 0 0 6px; border-right: 1px solid rgba(0,0,0,0.3);"></div>
+                        <div style="font-family: var(--font-sans); font-size: 0.7rem; color: #E2E8F0; font-weight: 700; letter-spacing: 2px; margin-bottom: auto; text-transform: uppercase; padding-left: 12px;">NovaLab.</div>
+                        <div style="padding-left: 12px;">
+                            <p style="color: #38bdf8; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">Sourcing List</p>
+                            <h3 style="color: #fff; font-family: var(--font-serif); font-size: 1.9rem; line-height: 1.1; margin-bottom: 20px;">Beauté &<br><span style="font-style: italic; color: #E2E8F0;">Cosmétique</span></h3>
+                        </div>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; padding-left: 12px;">
+                            <p style="color: var(--text-muted); font-family: var(--font-sans); font-size: 0.75rem; line-height: 1.7; margin: 0; font-weight: 500;">
+                                <span style="color: #38bdf8;">✓</span> 💄 Skincare & Cils<br>
+                                <span style="color: #38bdf8;">✓</span> Marque Blanche<br>
+                                <span style="color: #38bdf8;">✓</span> Laboratoires certifiés
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="sur-titre">Sourcing Liste Exclusif</span>
+                    <h1>💄 Skincare & <span class="serif-italic">Maquillage</span></h1>
+                    <div class="product-price">27€ <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400; text-decoration: line-through;">97€</span></div>
+                    <p class="product-desc">Lance ta propre marque de cosmétiques en marque blanche. Cette liste te donne accès aux laboratoires de pointe et aux usines de matériel d'institut avec des MOQ clairs et des normes respectées.</p>
+                    <ul class="features-list">
+                        <li>Laboratoires pour produits skincare et soins du visage (similaires à COSRX).</li>
+                        <li>Usines de maquillage (Banffee) accessibles dès 500 pièces pour lancer ta marque.</li>
+                        <li>Extensions de cils, faux cils et kits accessibles dès 10 pièces (Coseylashes).</li>
+                        <li>Fournisseurs de flacons, packaging sur-mesure (verre, bambou) et matériel d'institut.</li>
+                    </ul>
+                    <div class="bonus-box">
+                        <span>🎁</span>
+                        <div>
+                            <strong>INCLUS : Le Guide de Négociation & Sourcing</strong>
+                            <p>Pour cet achat, reçois gratuitement le guide complet : scripts WeChat de contact, technique d'ancrage à -30% et protection des paiements.</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary stripe-checkout" style="width: 100%;" data-product="beaute">Payer & Recevoir le PDF (27€)</button>
+                    <div class="security-badges"><span>🔒 Paiement sécurisé via Stripe</span><span>⚡ Envoi immédiat par email</span></div>
+                </div>
+            </section>
+            <section class="detailed-content">
+                <h2>Ce que contient <span class="serif-italic">ce répertoire</span></h2>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h3>✨ Soins & Skincare</h3>
+                        <p>Laboratoires spécialisés dans les produits de soin de la peau, poudres ayurvédiques et formulations avancées. Parfait pour une création de marque blanche propre.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>💄 Maquillage & Cils</h3>
+                        <p>Usines de maquillage professionnel et d'extensions de cils avec des MOQ très flexibles pour te permettre de tester rapidement ton marché.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>💆‍♀️ Matériel d'Institut</h3>
+                        <p>Équipe ton salon ou revends du matériel professionnel : machines de soin cutané dernier cri, lisseurs, chaises de massage et textile personnalisé pour institut.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- VIEW 4: MAISON                                 -->
+        <!-- ============================================== -->
+        <div id="view-maison" class="app-view">
+            <div class="breadcrumb" onclick="navigate('home')">&larr; Retour à la boutique</div>
+            <section class="product-layout">
+                <div class="product-image-box">
+                    <!-- MOCKUP 3D - LISTE -->
+                    <div style="position: relative; width: 220px; height: 320px; background: linear-gradient(145deg, #1a1a1a, #050505); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 6px 16px 16px 6px; box-shadow: inset 8px 0 15px rgba(255,255,255,0.05), 15px 25px 40px rgba(0,0,0,0.6), 0 0 30px rgba(56, 189, 248, 0.2); display: flex; flex-direction: column; padding: 25px 20px; text-align: left; transform: perspective(1000px) rotateY(-15deg); transition: transform 0.4s ease; z-index: 2; cursor: default;">
+                        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: linear-gradient(to right, rgba(255,255,255,0.15), transparent); border-radius: 6px 0 0 6px; border-right: 1px solid rgba(0,0,0,0.3);"></div>
+                        <div style="font-family: var(--font-sans); font-size: 0.7rem; color: #E2E8F0; font-weight: 700; letter-spacing: 2px; margin-bottom: auto; text-transform: uppercase; padding-left: 12px;">NovaLab.</div>
+                        <div style="padding-left: 12px;">
+                            <p style="color: #38bdf8; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">Sourcing List</p>
+                            <h3 style="color: #fff; font-family: var(--font-serif); font-size: 1.9rem; line-height: 1.1; margin-bottom: 20px;">Maison &<br><span style="font-style: italic; color: #E2E8F0;">Mobilier</span></h3>
+                        </div>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; padding-left: 12px;">
+                            <p style="color: var(--text-muted); font-family: var(--font-sans); font-size: 0.75rem; line-height: 1.7; margin: 0; font-weight: 500;">
+                                <span style="color: #38bdf8;">✓</span> 🛋️ Décoration<br>
+                                <span style="color: #38bdf8;">✓</span> Fauteuils Massants<br>
+                                <span style="color: #38bdf8;">✓</span> Contacts direct Usines
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="sur-titre">Sourcing Liste Exclusif</span>
+                    <h1>🛋️ Mobilier & <span class="serif-italic">Décoration</span></h1>
+                    <div class="product-price">27€ <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400; text-decoration: line-through;">97€</span></div>
+                    <p class="product-desc">Importe du mobilier tendance et de la décoration à forte valeur perçue. Ces usines sont habituées à l'exportation internationale et proposent des produits high-ticket pour maximiser tes bénéfices.</p>
+                    <ul class="features-list">
+                        <li>Mobilier d'intérieur tendance : Canapés compressés, tables japonaises, coiffeuses.</li>
+                        <li>Décoration high-ticket : Miroirs LED, cadres 3D, fontaines en marbre.</li>
+                        <li>Équipement Premium : Fauteuils massants professionnels et Headspa.</li>
+                        <li>Ameublement événementiel : Chaises de banquet, décoration de mariage, fleurs artificielles.</li>
+                    </ul>
+                    <div class="bonus-box">
+                        <span>🎁</span>
+                        <div>
+                            <strong>INCLUS : Le Guide de Négociation & Sourcing</strong>
+                            <p>Pour cet achat, reçois gratuitement le guide complet : scripts WeChat de contact, technique d'ancrage à -30% et protection des paiements.</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary stripe-checkout" style="width: 100%;" data-product="maison">Payer & Recevoir le PDF (27€)</button>
+                    <div class="security-badges"><span>🔒 Paiement sécurisé via Stripe</span><span>⚡ Envoi immédiat par email</span></div>
+                </div>
+            </section>
+            <section class="detailed-content">
+                <h2>Ce que contient <span class="serif-italic">ce répertoire</span></h2>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h3>🛋️ Mobilier Intérieur</h3>
+                        <p>Des fabricants de meubles de chambre, tables de chevet Bluetooth, mobilier pour enfants, et canapés spécialement emballés (compressés) pour optimiser les frais de port.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>🏛️ Déco & Extérieur</h3>
+                        <p>Aménage les jardins et les villas avec des fontaines en pierre, du mobilier de jardin résistant, ou décore l'intérieur avec des aquariums géants et des cadres sophistiqués.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>🎉 Événementiel & Pro</h3>
+                        <p>Sourcer en gros pour les mariages et banquets (mobilier, fleurs artificielles) ou équiper des professionnels avec des fauteuils massants haut de gamme et des Headspa.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- VIEW 5: BIJOUX                                 -->
+        <!-- ============================================== -->
+        <div id="view-bijoux" class="app-view">
+            <div class="breadcrumb" onclick="navigate('home')">&larr; Retour à la boutique</div>
+            <section class="product-layout">
+                <div class="product-image-box">
+                    <!-- MOCKUP 3D - LISTE -->
+                    <div style="position: relative; width: 220px; height: 320px; background: linear-gradient(145deg, #1a1a1a, #050505); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 6px 16px 16px 6px; box-shadow: inset 8px 0 15px rgba(255,255,255,0.05), 15px 25px 40px rgba(0,0,0,0.6), 0 0 30px rgba(56, 189, 248, 0.2); display: flex; flex-direction: column; padding: 25px 20px; text-align: left; transform: perspective(1000px) rotateY(-15deg); transition: transform 0.4s ease; z-index: 2; cursor: default;">
+                        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: linear-gradient(to right, rgba(255,255,255,0.15), transparent); border-radius: 6px 0 0 6px; border-right: 1px solid rgba(0,0,0,0.3);"></div>
+                        <div style="font-family: var(--font-sans); font-size: 0.7rem; color: #E2E8F0; font-weight: 700; letter-spacing: 2px; margin-bottom: auto; text-transform: uppercase; padding-left: 12px;">NovaLab.</div>
+                        <div style="padding-left: 12px;">
+                            <p style="color: #38bdf8; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">Sourcing List</p>
+                            <h3 style="color: #fff; font-family: var(--font-serif); font-size: 1.9rem; line-height: 1.1; margin-bottom: 20px;">Bijoux &<br><span style="font-style: italic; color: #E2E8F0;">Accessoires</span></h3>
+                        </div>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; padding-left: 12px;">
+                            <p style="color: var(--text-muted); font-family: var(--font-sans); font-size: 0.75rem; line-height: 1.7; margin: 0; font-weight: 500;">
+                                <span style="color: #38bdf8;">✓</span> 💍 Joaillerie Or/Argent<br>
+                                <span style="color: #38bdf8;">✓</span> MOQ dès 1 Pièce<br>
+                                <span style="color: #38bdf8;">✓</span> Packaging Sur-Mesure
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="sur-titre">Sourcing Liste Exclusif</span>
+                    <h1>💍 Joaillerie & <span class="serif-italic">Packaging</span></h1>
+                    <div class="product-price">27€ <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400; text-decoration: line-through;">97€</span></div>
+                    <p class="product-desc">La niche la plus rentable du e-commerce. Trouve des fournisseurs de bijoux résistants au temps (waterproof) avec des MOQ extrêmement bas pour lancer ta propre collection sans gros budget.</p>
+                    <ul class="features-list">
+                        <li>Usine Alpha Jewelry : Bijoux en tout genre avec MOQ à 1 PIÈCE pour lancer ta marque.</li>
+                        <li>Bijoux en plaqué or, acier inoxydable 925 silver, ensembles et tiares.</li>
+                        <li>Boîtes à bijoux, présentoirs et pochons individuels pour un branding premium.</li>
+                        <li>BONUS : Contact d'un photographe professionnel de bijoux sur place (dès 2€/photo).</li>
+                    </ul>
+                    <div class="bonus-box">
+                        <span>🎁</span>
+                        <div>
+                            <strong>INCLUS : Le Guide de Négociation & Sourcing</strong>
+                            <p>Pour cet achat, reçois gratuitement le guide complet : scripts WeChat de contact, technique d'ancrage à -30% et protection des paiements.</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary stripe-checkout" style="width: 100%;" data-product="bijoux">Payer & Recevoir le PDF (27€)</button>
+                    <div class="security-badges"><span>🔒 Paiement sécurisé via Stripe</span><span>⚡ Envoi immédiat par email</span></div>
+                </div>
+            </section>
+            <section class="detailed-content">
+                <h2>Ce que contient <span class="serif-italic">ce répertoire</span></h2>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h3>💍 Plaqué Or & Argent</h3>
+                        <p>Fabricants de bijoux tendance, charms, colliers, et boucles d'oreilles. Accède à des finitions haut de gamme (plaqué or, acier inoxydable waterproof) pour fidéliser tes clients.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>🎁 Packaging Sur-Mesure</h3>
+                        <p>L'expérience unboxing est cruciale. Trouve les fournisseurs d'étuis, de boîtes à bijoux rigides et de présentoirs pour donner une image luxueuse à tes créations.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>📸 Photographie Produit</h3>
+                        <p>Un contact en or : un photographe professionnel directement basé en Chine. Il réceptionne tes bijoux, les photographie en studio (dès 2€/photo) et t'envoie les visuels pour ton site.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- VIEW 6: SACS                                   -->
+        <!-- ============================================== -->
+        <div id="view-sacs" class="app-view">
+            <div class="breadcrumb" onclick="navigate('home')">&larr; Retour à la boutique</div>
+            <section class="product-layout">
+                <div class="product-image-box">
+                    <!-- MOCKUP 3D - LISTE -->
+                    <div style="position: relative; width: 220px; height: 320px; background: linear-gradient(145deg, #1a1a1a, #050505); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 6px 16px 16px 6px; box-shadow: inset 8px 0 15px rgba(255,255,255,0.05), 15px 25px 40px rgba(0,0,0,0.6), 0 0 30px rgba(56, 189, 248, 0.2); display: flex; flex-direction: column; padding: 25px 20px; text-align: left; transform: perspective(1000px) rotateY(-15deg); transition: transform 0.4s ease; z-index: 2; cursor: default;">
+                        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: linear-gradient(to right, rgba(255,255,255,0.15), transparent); border-radius: 6px 0 0 6px; border-right: 1px solid rgba(0,0,0,0.3);"></div>
+                        <div style="font-family: var(--font-sans); font-size: 0.7rem; color: #E2E8F0; font-weight: 700; letter-spacing: 2px; margin-bottom: auto; text-transform: uppercase; padding-left: 12px;">NovaLab.</div>
+                        <div style="padding-left: 12px;">
+                            <p style="color: #38bdf8; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">Sourcing List</p>
+                            <h3 style="color: #fff; font-family: var(--font-serif); font-size: 1.9rem; line-height: 1.1; margin-bottom: 20px;">Sacs &<br><span style="font-style: italic; color: #E2E8F0;">Maroquinerie</span></h3>
+                        </div>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; padding-left: 12px;">
+                            <p style="color: var(--text-muted); font-family: var(--font-sans); font-size: 0.75rem; line-height: 1.7; margin: 0; font-weight: 500;">
+                                <span style="color: #38bdf8;">✓</span> 👜 Accessoires Voyage<br>
+                                <span style="color: #38bdf8;">✓</span> Marques Inspirations<br>
+                                <span style="color: #38bdf8;">✓</span> Contacts direct Usines
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="sur-titre">Sourcing Liste Exclusif</span>
+                    <h1>👜 Maroquinerie & <span class="serif-italic">Sacs</span></h1>
+                    <div class="product-price">27€ <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400; text-decoration: line-through;">97€</span></div>
+                    <p class="product-desc">Des usines expertes dans la confection de maroquinerie. Sacs à main, sacs de voyage, bagagerie pour enfants. Crée ta ligne de sacs avec des fournisseurs fiables et des MOQ adaptés.</p>
+                    <ul class="features-list">
+                        <li>BS Bag Factory : MOQ de 50 pièces pour créer tes propres sacs avec ton logo.</li>
+                        <li>Fournisseurs pour sacs tendance, sacs de soirée et inspirations grandes marques (ex: Birkin).</li>
+                        <li>Sacs faits main, designs originaux (animaux, motifs fleuris).</li>
+                        <li>Contacts WeChat directs des responsables de production.</li>
+                    </ul>
+                    <div class="bonus-box">
+                        <span>🎁</span>
+                        <div>
+                            <strong>INCLUS : Le Guide de Négociation & Sourcing</strong>
+                            <p>Pour cet achat, reçois gratuitement le guide complet : scripts WeChat de contact, technique d'ancrage à -30% et protection des paiements.</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary stripe-checkout" style="width: 100%;" data-product="sacs">Payer & Recevoir le PDF (27€)</button>
+                    <div class="security-badges"><span>🔒 Paiement sécurisé via Stripe</span><span>⚡ Envoi immédiat par email</span></div>
+                </div>
+            </section>
+            <section class="detailed-content">
+                <h2>Ce que contient <span class="serif-italic">ce répertoire</span></h2>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h3>👜 Sacs pour Femmes</h3>
+                        <p>Des fabricants pour les sacs tendances, sacs de soirée élégants, et designs originaux (faits main). Possibilité de s'inspirer des grandes maisons de couture.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>💼 Hommes & Voyage</h3>
+                        <p>Usines spécialisées dans la confection de mallettes pour hommes, sacs à dos robustes (bag pack), et bagagerie de voyage.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>🎒 Sacs pour Enfants</h3>
+                        <p>Fournisseurs dédiés aux petits : cartables, sacs à dos ludiques (motifs animaux, Kai Di Bear) avec des matériaux adaptés et résistants.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- VIEW 7: PACK COMPLET                           -->
+        <!-- ============================================== -->
+        <div id="view-pack" class="app-view">
+            <div class="breadcrumb" onclick="navigate('home')">&larr; Retour à la boutique</div>
+            <section class="product-layout">
+                <div class="product-image-box pack-box">
+                    <!-- MOCKUP 3D - PACK COMPLET -->
+                    <div style="position: relative; width: 240px; height: 340px; background: linear-gradient(145deg, #2a0a4a, #050505); border: 1px solid rgba(168, 85, 247, 0.6); border-radius: 8px 18px 18px 8px; box-shadow: inset 10px 0 20px rgba(255,255,255,0.1), 20px 30px 50px rgba(0,0,0,0.8), 0 0 40px rgba(168, 85, 247, 0.4); display: flex; flex-direction: column; padding: 30px 20px; text-align: center; transform: perspective(1000px) rotateY(-20deg) rotateX(5deg); transition: transform 0.4s ease; z-index: 2; cursor: default;">
+                        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 22px; background: linear-gradient(to right, rgba(255,255,255,0.2), transparent); border-radius: 8px 0 0 8px; border-right: 2px solid rgba(0,0,0,0.5);"></div>
+                        <div style="font-family: var(--font-sans); font-size: 0.75rem; color: #E2E8F0; font-weight: 700; letter-spacing: 3px; margin-bottom: 20px; text-transform: uppercase;">NovaLab.</div>
+                        <div style="margin: auto 0;">
+                            <span style="display: inline-block; padding: 4px 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #e2e8f0; margin-bottom: 15px;">L'Offre Complète</span>
+                            <h3 style="color: #fff; font-family: var(--font-serif); font-size: 2.2rem; line-height: 1.1; margin-bottom: 5px;">Le Pack</h3>
+                            <h3 style="color: #a855f7; font-family: var(--font-serif); font-size: 2.2rem; line-height: 1.1; margin-bottom: 20px; text-shadow: 0 0 10px rgba(168,85,247,0.5);">Maître<br>Sourcing</h3>
+                        </div>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
+                            <p style="color: #fff; font-family: var(--font-sans); font-size: 0.8rem; line-height: 1.5; margin: 0; font-weight: 600;">
+                                8 Fichiers Inclus<br>
+                                <span style="color: #a855f7; font-size: 0.7rem; font-weight: 400;">Mises à jour à vie</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="sur-titre">Écosystème NovaLab</span>
+                    <h1>📦 Le Pack <span class="serif-italic">Maître Sourcing</span></h1>
+                    <div class="product-price" style="color: #a855f7;">67€ <span style="font-size: 1.2rem; color: var(--text-muted); font-weight: 400; text-decoration: line-through;">219€</span></div>
+                    <p class="product-desc">Pourquoi te limiter à une seule niche ? Obtiens l'intégralité de mon carnet d'adresses en Chine, mes stratégies de négociation et le contact direct de mes transporteurs pour bâtir un empire e-commerce solide et pérenne.</p>
+                    
+                    <ul class="features-list">
+                        <li><strong>Les 6 listes de fournisseurs incluses</strong> : Mode, Tech, Beauté, Maison, Bijoux, Sacs.</li>
+                        <li>Le Guide Pratique de Négociation & Sourcing pour sécuriser tes achats et obtenir les meilleurs prix (Technique de l'ancrage, Trade Assurance).</li>
+                        <li><strong>Fiche Transporteur Privé EXCLUSIVE</strong> : Contact direct de WAL Distribution à Guangzhou pour tes expéditions Air/Mer/Train (+50 pays).</li>
+                        <li>Un investissement rentabilisé dès ta première commande grâce aux économies réalisées.</li>
+                    </ul>
+
+                    <button class="btn btn-primary stripe-checkout" style="width: 100%; padding: 25px 0; font-size: 1.2rem;" data-product="pack_complet">Commander le Pack Ultime (67€)</button>
+                    
+                    <div class="security-badges">
+                        <span>🔒 Paiement sécurisé via Stripe</span>
+                        <span>⚡ Accès immédiat aux 8 fichiers PDF</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div> <!-- End Container -->
+
+    <script>
+        // Router & Navigation
+        function navigate(viewId) {
+            document.querySelectorAll('.app-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById('view-' + viewId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile Menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Stripe Checkout Links Configuration
+        document.addEventListener("DOMContentLoaded", () => {
+            // Configuration des liens de paiement Stripe pour chaque produit
+            const stripeLinks = {
+                'mode': 'https://buy.stripe.com/00w00k2gke5pdyKbIhdnW03',
+                'tech': 'https://buy.stripe.com/6oU7sMf36bXhfGS27HdnW04',
+                'beaute': 'https://buy.stripe.com/8x214o8EI3qL7ambIhdnW06',
+                'maison': 'https://buy.stripe.com/7sY8wQaMQ6CX52eh2BdnW05',
+                'bijoux': 'https://buy.stripe.com/dRm7sM5sw2mHdyK5jTdnW02',
+                'sacs': 'https://buy.stripe.com/5kQaEYbQU7H17am3bLdnW01',
+                'pack_complet': 'https://buy.stripe.com/4gM00kaMQd1leCO7s1dnW00'
+            };
+
+            const stripeButtons = document.querySelectorAll('.stripe-checkout');
+            stripeButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = e.target.getAttribute('data-product');
+                    
+                    if(stripeLinks[productId]) {
+                        // Animation du bouton pour rassurer le client pendant le chargement
+                        const originalText = e.target.innerText;
+                        e.target.innerText = "Redirection sécurisée...";
+                        e.target.style.opacity = "0.8";
+                        
+                        // Redirection vers le lien de paiement Stripe correspondant
+                        window.location.href = stripeLinks[productId];
+                    } else {
+                        console.error("Lien Stripe introuvable pour ce produit :", productId);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
